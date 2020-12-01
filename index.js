@@ -3,19 +3,40 @@ const app = express();
 const cheerio = require('cheerio');
 const request = require('request');
 
-request({
-    method: 'GET',
-    url: 'https://www.numbeo.com/cost-of-living/'
-}, (err, res, body) => {
+app.set('view engine', 'ejs');
 
-    if (err) return console.error(err);
+app.use(require('morgan')('dev'));
+app.use(express.urlencoded({ extended: false }));
+app.use(express.static(__dirname + '/public'));
+//app.use(layouts);
 
+app.get('/', (req, res) => {
+    console.log(res.locals.alerts);
+    res.render('index', { alerts: res.locals.alerts });
+  });
+
+  request('https://www.numbeo.com/cost-of-living/in/Washington', (error, response, body) => {
     let $ = cheerio.load(body);
+    let results = $('.search-result-preview')
+    let resultTitles = results.map((index, element)=>{
+        return $(element).find('td').attr('Meal, Inexpensive Restaurant')
+    })
+    console.log(resultTitles)
+})
 
-    let title = $('title');
+// request({
+//     method: 'GET',
+//     url: 'https://www.numbeo.com/cost-of-living/'
+// }, (err, res, body) => {
 
-    console.log(title.text());
-});
+//     if (err) return console.error(err);
+
+//     let $ = cheerio.load(body);
+
+//     let title = $('title');
+
+//     console.log(title.text());
+// });
 const PORT = process.env.PORT || 3000;
 
 app.get("/thing", (req, res) => res.send("Connected"));
