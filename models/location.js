@@ -14,15 +14,16 @@ module.exports = (sequelize, DataTypes) => {
     }
   };
   location.init({
-    city_id: DataTypes.STRING,
-    1 _bedroom_centre: DataTypes.INTEGER,
-    1 _bedroom_outside_centre: DataTypes.INTEGER,
+    city_id: DataTypes.INTEGER,
+    bedroom_in_city: DataTypes.INTEGER,
+    bedroom_outside_centre: DataTypes.INTEGER,
     childcare: DataTypes.INTEGER,
-    utilities_internet: DataTypes.INTEGER,
+    utilities: DataTypes.INTEGER,
+    internet: DataTypes.INTEGER,
     gas: DataTypes.INTEGER,
-    month_pass: DataTypes.INTEGER,
-    meal_average: DataTypes.INTEGER,
-    gallon_milk: DataTypes.INTEGER
+    public_transit: DataTypes.INTEGER,
+    average_meal: DataTypes.INTEGER,
+    milk: DataTypes.INTEGER
   }, {
     sequelize,
     modelName: 'location',

@@ -9,30 +9,33 @@ module.exports = {
         type: Sequelize.INTEGER
       },
       city_id: {
-        type: Sequelize.STRING
-      },
-      1 _bedroom_centre: {
         type: Sequelize.INTEGER
       },
-      1 _bedroom_outside_centre: {
+      bedroom_in_city: {
+        type: Sequelize.INTEGER
+      },
+      bedroom_outside_centre: {
         type: Sequelize.INTEGER
       },
       childcare: {
         type: Sequelize.INTEGER
       },
-      utilities_internet: {
+      utilities: {
+        type: Sequelize.INTEGER
+      },
+      internet: {
         type: Sequelize.INTEGER
       },
       gas: {
         type: Sequelize.INTEGER
       },
-      month_pass: {
+      public_transit: {
         type: Sequelize.INTEGER
       },
-      meal_average: {
+      average_meal: {
         type: Sequelize.INTEGER
       },
-      gallon_milk: {
+      milk: {
         type: Sequelize.INTEGER
       },
       createdAt: {
