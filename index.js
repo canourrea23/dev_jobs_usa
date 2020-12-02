@@ -92,21 +92,22 @@ const LosAngeles = {
         console.log(childCarePriceParsed, 'childcare');   
         console.log(averageMeal, 'meal');
         const locationObject = { 
-            bedroom_in_city: centre,
-            bedroom_outside_centre: outOfCity,
-            public_transit: publicTransit,
-            internet: internetPrice,
-            childcare:  childCarePriceParsed,
-            gas: gasPrice,
-            average_meal: averageMeal,
-            milk: milkPrice,
-            utilities: utilitiesPrice,
+            bedroom_in_city: Math.round(centre),
+            bedroom_outside_centre: Math.round(outOfCity),
+            public_transit: Math.round(publicTransit),
+            internet: Math.round(internetPrice),
+            childcare:  Math.round(childCarePriceParsed),
+            gas: Math.round(gasPrice),
+            average_meal: Math.round(averageMeal),
+            milk: Math.round(milkPrice),
+            utilities: Math.round(utilitiesPrice),
         }
         console.log(locationObject);
+        // console.log(Math.round(locationObject.bedroom_in_city));
         
         db.location.create(locationObject)
         .then((newLocation) => {
-            console.log(newLocation);
+            console.log(newLocation.get());
 
         })
   });

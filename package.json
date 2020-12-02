@@ -1,0 +1,29 @@
+{
+  "name": "dev_jobs_usa",
+  "version": "1.0.0",
+  "description": "Job search for Web Developers in the US by state and city",
+  "main": "index.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/canourrea23/dev_jobs_usa.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/canourrea23/dev_jobs_usa/issues"
+  },
+  "homepage": "https://github.com/canourrea23/dev_jobs_usa#readme",
+  "dependencies": {
+    "axios": "^0.21.0",
+    "cheerio": "^1.0.0-rc.3",
+    "express": "^4.17.1",
+    "request": "^2.88.2"
+  }
+}
