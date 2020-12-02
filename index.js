@@ -7,6 +7,7 @@ const layouts = require('express-ejs-layouts');
 const session = require('express-session');
 const passport = require('./config/ppConfig');
 const flash = require('connect-flash');
+const db = require("./models");
 const SECRET_SESSION = process.env.SECRET_SESSION;
 
 app.set('view engine', 'ejs');
@@ -67,7 +68,6 @@ const LosAngeles = {
       let $ = cheerio.load(body);
       let title = $('tr').attr('class', 'first_currency');
       // console.log(title.text());
-
         // const listOfPrices = $('.first_currency').find('span').text().split('\n');
         // console.log(listOfPrices);
       let milkPrice = Number($('.first_currency').find('span').text().split('\n')[10].split('$')[0]);                                                                    
@@ -78,11 +78,10 @@ const LosAngeles = {
       let childCarePrice = $('.first_currency').find('span').text().split('\n')[47].split(' ')[0].split('$')[0];
       let childCarePriceParsed = Number(childCarePrice.split(',')[0] + childCarePrice.split(',')[1]);
       const arrayOfData = $('.first_currency').find('span').text().split('\n')
-        let centre = arrayOfData[55];
-        console.log(centre, ' centre');
-        let outOfCity = arrayOfData[56]     
-           
-        console.log(outOfCity, 'out of city');
+      let centre = Number(arrayOfData[55].split('$')[0].split(',')[0] + arrayOfData[55].split('$')[0].split(',')[1]);
+      console.log(centre, 'centre');
+      let outOfCity = Number(arrayOfData[56].split('$')[0].split(',')[2][arrayOfData[56].split('$')[0].split(',')[2].length -1] + arrayOfData[56].split('$')[0].split(',')[3]);
+      console.log(outOfCity, 'outside city');
       let averageMeal = Number($('.first_currency').find('span').text().split('\n')[1].split('$')[0]);
         console.log(milkPrice, 'milk');
         console.log(gasPrice, 'gas');
@@ -91,12 +90,27 @@ const LosAngeles = {
         console.log(utilitiesPrice, 'utilities');
         //console.log(childCarePrice);
         console.log(childCarePriceParsed, 'childcare');   
-        // console.log(centerCity, 'centercity');
-        // console.log(centerCityParsed, 'centercity');
-        //console.log(outsideCenter);
-        // console.log(outsideCenterParsed, 'outside city');
         console.log(averageMeal, 'meal');
+        const locationObject = { 
+            bedroom_in_city: centre,
+            bedroom_outside_centre: outOfCity,
+            public_transit: publicTransit,
+            internet: internetPrice,
+            childcare:  childCarePriceParsed,
+            gas: gasPrice,
+            average_meal: averageMeal,
+            milk: milkPrice,
+            utilities: utilitiesPrice,
+        }
+        console.log(locationObject);
+        
+        db.location.create(locationObject)
+        .then((newLocation) => {
+            console.log(newLocation);
+
+        })
   });
+
 //
 const PORT = process.env.PORT || 8000;
 
