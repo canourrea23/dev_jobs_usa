@@ -47,16 +47,16 @@ app.get('/', (req, res) => {
     method: 'GET',
     url: 'https://www.numbeo.com/cost-of-living/in/Washington'
   };
-  request(Washington, (err, res, body) => {
-      if (err) return console.error(err);
-      let $ = cheerio.load(body);
-      let title = $('tr').attr('class', 'first_currency');
-      // console.log(title.text());
-      let milk = $('.first_currency').find('span').text().split('\n')[10];
-      let priceOfMilk = Number(milk);
-      console.log(milk);
-      console.log(priceOfMilk);
-  });
+//   request(Washington, (err, res, body) => {
+//       if (err) return console.error(err);
+//       let $ = cheerio.load(body);
+//       let title = $('tr').attr('class', 'first_currency');
+//       // console.log(title.text());
+//       let milk = $('.first_currency').find('span').text().split('\n')[10];
+//       let priceOfMilk = Number(milk);
+//       console.log(milk);
+//       console.log(priceOfMilk);
+//   });
 
 const LosAngeles = {
     method: 'GET',
@@ -67,12 +67,21 @@ const LosAngeles = {
       let $ = cheerio.load(body);
       let title = $('tr').attr('class', 'first_currency');
       // console.log(title.text());
-      let milk = $('.first_currency').find('span').text().split('\n')[10].split('$')[0];
-      let gas = $('.first_currency').find('span').text().split('\n')[36].split('$')[0];                                                                    
-      let priceOfMilk = Number(milk);
-      let priceOfGas = Number(gas);
-      console.log(gas);
-      console.log(priceOfGas);
+      let milkPrice = Number($('.first_currency').find('span').text().split('\n')[10].split('$')[0]);                                                                    
+      let gasPrice = Number($('.first_currency').find('span').text().split('\n')[35].split('--')[1].slice(5).split('$')[0]);
+      let publicTransit = Number($('.first_currency').find('span').text().split('\n')[31].split('--')[1].slice(4).split('$')[0]);
+      let utilitiesPrice = Number($('.first_currency').find('span').text().split('\n')[39].split('$')[0]);
+      let internetPrice = Number($('.first_currency').find('span').text().split('\n')[41].split('--')[1].slice(4).split('$')[0]);
+      let childCare = Number($('.first_currency').find('span').text().split('\n')[47].split('$')[0]);
+      let centerCity = Number($('.first_currency').find('span').text().split('\n')[55].split('$')[0]);
+    //   console.log(milkPrice);
+    //   console.log(gasPrice);
+    //   console.log(publicTransit);
+    //   console.log(utilitiesPrice);
+    //   console.log(internetPrice);
+      console.log(childCare);
+      //console.log(centerCity);
+      
   });
 //
 const PORT = process.env.PORT || 8000;
