@@ -9,8 +9,6 @@ const passport = require('./config/ppConfig');
 const flash = require('connect-flash');
 const SECRET_SESSION = process.env.SECRET_SESSION;
 
-// scrapeProduct('https://www.numbeo.com/cost-of-living/in/Washington');
-
 app.set('view engine', 'ejs');
 
 app.use(require('morgan')('dev'));
@@ -23,63 +21,60 @@ const sessionObject = {
     saveUninitialized: true
   }
   
-  app.use(session(sessionObject));
+app.use(session(sessionObject));
   
   // Initialize passport and run through middleware
-  app.use(passport.initialize());
-  app.use(passport.session());
-  
-  // Flash
-  // Using flash throughout app to send temp messages to user
-  app.use(flash());
-  
-  // Messages that will be accessible to every view
-  app.use((req, res, next) => {
-    // Before every route, we will attach a user to res.local
-    res.locals.alerts = req.flash();
-    res.locals.currentUser = req.user;
-    next();
-  });
+app.use(passport.initialize());
+app.use(passport.session());
+
+// Flash
+// Using flash throughout app to send temp messages to user
+app.use(flash());
+
+// Messages that will be accessible to every view
+app.use((req, res, next) => {
+// Before every route, we will attach a user to res.local
+res.locals.alerts = req.flash();
+res.locals.currentUser = req.user;
+next();
+});
 
 app.get('/', (req, res) => {
     console.log(res.locals.alerts);
     res.render('index', { alerts: res.locals.alerts });
   });
-//   const website = {
-//     method: 'GET',
-//     url: 'https://www.numbeo.com/cost-of-living/in/Washington'
-//   };
-//   request(website, (err, res, body) => {
-//       if (err) return console.error(err);
-//       let $ = cheerio.load(body);
-//       let title = $('tr').attr('class', 'first_currency');
-//       // console.log(title.text());
-//       let milk = $('.first_currency').find('span').text().split('\n')[10];
-//       console.log(milk);
-//   });
-//   request('https://www.numbeo.com/cost-of-living/in/Washington', (error, response, body) => {
-//     let $ = cheerio.load(body);
-//     let results = $('.search-result-preview')
-//     let resultTitles = results.map((index, element)=>{
-//         return $(element).find('<td>Meal, Inexpensive Restaurant </td>').attr('meal')
-        
-//     })
-//     console.log(resultTitles)
-// })
-
-const website = {
+  const Washington = {
     method: 'GET',
-    url: 'https://www.numbeo.com/cost-of-living/in/Los-Angeles'
+    url: 'https://www.numbeo.com/cost-of-living/in/Washington'
   };
-  request(website, (err, res, body) => {
+  request(Washington, (err, res, body) => {
       if (err) return console.error(err);
       let $ = cheerio.load(body);
       let title = $('tr').attr('class', 'first_currency');
       // console.log(title.text());
       let milk = $('.first_currency').find('span').text().split('\n')[10];
+      let priceOfMilk = Number(milk);
       console.log(milk);
+      console.log(priceOfMilk);
   });
 
+const LosAngeles = {
+    method: 'GET',
+    url: 'https://www.numbeo.com/cost-of-living/in/Los-Angeles'
+  };
+  request(LosAngeles, (err, res, body) => {
+      if (err) return console.error(err);
+      let $ = cheerio.load(body);
+      let title = $('tr').attr('class', 'first_currency');
+      // console.log(title.text());
+      let milk = $('.first_currency').find('span').text().split('\n')[10].split('$')[0];
+      let gas = $('.first_currency').find('span').text().split('\n')[36].split('$')[0];                                                                    
+      let priceOfMilk = Number(milk);
+      let priceOfGas = Number(gas);
+      console.log(gas);
+      console.log(priceOfGas);
+  });
+//
 const PORT = process.env.PORT || 8000;
 
 app.get("/thing", (req, res) => res.send("Connected")); 
@@ -89,11 +84,3 @@ const server = app.listen(PORT, () => {
 });
 
 module.exports = server;
-
-
-
-// const list = $('table[class="data_wide_table new_bar_table"]')
-// .find('tbody > tr > td > span[class="first_currenecy"]')
-// .toArray()
-// .map(element => $(element).textContent);
-// console.log(list);
