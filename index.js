@@ -67,21 +67,35 @@ const LosAngeles = {
       let $ = cheerio.load(body);
       let title = $('tr').attr('class', 'first_currency');
       // console.log(title.text());
+
+        // const listOfPrices = $('.first_currency').find('span').text().split('\n');
+        // console.log(listOfPrices);
       let milkPrice = Number($('.first_currency').find('span').text().split('\n')[10].split('$')[0]);                                                                    
       let gasPrice = Number($('.first_currency').find('span').text().split('\n')[35].split('--')[1].slice(5).split('$')[0]);
       let publicTransit = Number($('.first_currency').find('span').text().split('\n')[31].split('--')[1].slice(4).split('$')[0]);
       let utilitiesPrice = Number($('.first_currency').find('span').text().split('\n')[39].split('$')[0]);
       let internetPrice = Number($('.first_currency').find('span').text().split('\n')[41].split('--')[1].slice(4).split('$')[0]);
-      let childCare = Number($('.first_currency').find('span').text().split('\n')[47].split('$')[0]);
-      let centerCity = Number($('.first_currency').find('span').text().split('\n')[55].split('$')[0]);
-    //   console.log(milkPrice);
-    //   console.log(gasPrice);
-    //   console.log(publicTransit);
-    //   console.log(utilitiesPrice);
-    //   console.log(internetPrice);
-      console.log(childCare);
-      //console.log(centerCity);
-      
+      let childCarePrice = $('.first_currency').find('span').text().split('\n')[47].split(' ')[0].split('$')[0];
+      let childCarePriceParsed = Number(childCarePrice.split(',')[0] + childCarePrice.split(',')[1]);
+      const arrayOfData = $('.first_currency').find('span').text().split('\n')
+        let centre = arrayOfData[55];
+        console.log(centre, ' centre');
+        let outOfCity = arrayOfData[56]     
+           
+        console.log(outOfCity, 'out of city');
+      let averageMeal = Number($('.first_currency').find('span').text().split('\n')[1].split('$')[0]);
+        console.log(milkPrice, 'milk');
+        console.log(gasPrice, 'gas');
+        console.log(publicTransit, 'transit');
+        console.log(internetPrice, 'internet');
+        console.log(utilitiesPrice, 'utilities');
+        //console.log(childCarePrice);
+        console.log(childCarePriceParsed, 'childcare');   
+        // console.log(centerCity, 'centercity');
+        // console.log(centerCityParsed, 'centercity');
+        //console.log(outsideCenter);
+        // console.log(outsideCenterParsed, 'outside city');
+        console.log(averageMeal, 'meal');
   });
 //
 const PORT = process.env.PORT || 8000;
