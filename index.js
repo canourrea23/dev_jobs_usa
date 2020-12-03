@@ -45,34 +45,16 @@ app.get('/', (req, res) => {
     console.log(res.locals.alerts);
     res.render('index', { alerts: res.locals.alerts });
   });
-const searchTerm = body.req.res;
-searchTerm = req.res.newLocation;
-  const Washington = {
-    method: 'GET',
-    url: `https://www.numbeo.com/cost-of-living/in/${newLocation}`
-  };
-//   request(Washington, (err, res, body) => {
-//       if (err) return console.error(err);
-//       let $ = cheerio.load(body);
-//       let title = $('tr').attr('class', 'first_currency');
-//       // console.log(title.text());
-//       let milk = $('.first_currency').find('span').text().split('\n')[10];
-//       let priceOfMilk = Number(milk);
-//       console.log(milk);
-//       console.log(priceOfMilk);
-//   });
 
-const LosAngeles = {
+let city = 'Washington'
+const requestObject = {
     method: 'GET',
-    url: 'https://www.numbeo.com/cost-of-living/in/Los-Angeles'
+    url: `https://www.numbeo.com/cost-of-living/in/${city}`
   };
-  request(LosAngeles, (err, res, body) => {
+  request(requestObject, (err, res, body) => {
       if (err) return console.error(err);
       let $ = cheerio.load(body);
       let title = $('tr').attr('class', 'first_currency');
-      // console.log(title.text());
-        // const listOfPrices = $('.first_currency').find('span').text().split('\n');
-        // console.log(listOfPrices);
       let milkPrice = Number($('.first_currency').find('span').text().split('\n')[10].split('$')[0]);                                                                    
       let gasPrice = Number($('.first_currency').find('span').text().split('\n')[35].split('--')[1].slice(5).split('$')[0]);
       let publicTransit = Number($('.first_currency').find('span').text().split('\n')[31].split('--')[1].slice(4).split('$')[0]);
