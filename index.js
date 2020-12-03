@@ -1,14 +1,15 @@
 const express = require("express");
 const app = express();
+require('dotenv').config()
 const cheerio = require('cheerio');
 const request = require('request');
-const puppeteer = require('puppeteer');
-const layouts = require('express-ejs-layouts');
+//const layouts = require('express-ejs-layouts');
 const session = require('express-session');
 const passport = require('./config/ppConfig');
 const flash = require('connect-flash');
 const db = require("./models");
 const SECRET_SESSION = process.env.SECRET_SESSION;
+console.log('SECRET_SESSION', SECRET_SESSION);
 
 app.set('view engine', 'ejs');
 
@@ -78,19 +79,9 @@ const LosAngeles = {
       let childCarePrice = $('.first_currency').find('span').text().split('\n')[47].split(' ')[0].split('$')[0];
       let childCarePriceParsed = Number(childCarePrice.split(',')[0] + childCarePrice.split(',')[1]);
       const arrayOfData = $('.first_currency').find('span').text().split('\n')
-      let centre = Number(arrayOfData[55].split('$')[0].split(',')[0] + arrayOfData[55].split('$')[0].split(',')[1]);
-      console.log(centre, 'centre');
-      let outOfCity = Number(arrayOfData[56].split('$')[0].split(',')[2][arrayOfData[56].split('$')[0].split(',')[2].length -1] + arrayOfData[56].split('$')[0].split(',')[3]);
-      console.log(outOfCity, 'outside city');
+      let centre = Number(arrayOfData[55].split('$')[0].split(',')[0] + arrayOfData[55].split('$')[0].split(',')[1]);    
+      let outOfCity = Number(arrayOfData[56].split('$')[0].split(',')[2][arrayOfData[56].split('$')[0].split(',')[2].length -1] + arrayOfData[56].split('$')[0].split(',')[3]);   
       let averageMeal = Number($('.first_currency').find('span').text().split('\n')[1].split('$')[0]);
-        console.log(milkPrice, 'milk');
-        console.log(gasPrice, 'gas');
-        console.log(publicTransit, 'transit');
-        console.log(internetPrice, 'internet');
-        console.log(utilitiesPrice, 'utilities');
-        //console.log(childCarePrice);
-        console.log(childCarePriceParsed, 'childcare');   
-        console.log(averageMeal, 'meal');
         const locationObject = { 
             bedroom_in_city: Math.round(centre),
             bedroom_outside_centre: Math.round(outOfCity),
@@ -113,7 +104,7 @@ const LosAngeles = {
   });
 
 //
-const PORT = process.env.PORT || 8000;
+const PORT = process.env.PORT || 3000;
 
 app.get("/thing", (req, res) => res.send("Connected")); 
 
