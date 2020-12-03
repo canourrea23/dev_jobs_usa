@@ -45,9 +45,11 @@ app.get('/', (req, res) => {
     console.log(res.locals.alerts);
     res.render('index', { alerts: res.locals.alerts });
   });
+const searchTerm = body.req.res;
+searchTerm = req.res.newLocation;
   const Washington = {
     method: 'GET',
-    url: 'https://www.numbeo.com/cost-of-living/in/Washington'
+    url: `https://www.numbeo.com/cost-of-living/in/${newLocation}`
   };
 //   request(Washington, (err, res, body) => {
 //       if (err) return console.error(err);
