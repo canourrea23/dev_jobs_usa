@@ -1,18 +1,14 @@
 <h1><%= city %></h1>
 <ol>
     <% const newLocation => { %>
-        <li><a href="/city/<%= city %>"></a></li>
-        <li>Bedroom In City: <%= newLocation.bedroom_in_city %></li>
+        <li>1 Bedroom In City: <%= newLocation.bedroom_in_city %></li>
+        <li>1 Bedroom outside of Center: <%= newLocation.bedroom_outside_centre%> </li>
+        <li>Childcare: <%= newLocation.childcare %></li>
+        <li>Utilities (Electricity, Heating, Cooling, Water, Garbage): <%= newLocation.utilities %></li>
+        <li>Internet: <%= newLocation.internet %></li>
+        <li>Gas: <%= newLocation.childcare %></li>
+        <li>Public Transportation: <%= newLocation.public_transit %></li>
+        <li>Average meal: <%= newLocation.average_meal %></li>
+        <li>Milk: <%= newLocation.Milk %></li>
     <% } %> 
 </ol>
-
-<li>New York: <% New-York %> </li>
-<li>Los Angeles: <% Los-Angeles %></li>
-<li>San Francisco: <% San-Francisco %></li>
-<li>Seattle: <% Seattle %></li>
-<li>Los-Angeles: <% Los-Angeles %></li>
-<li>Chicago: <% Chicago %></li>
-<li>Baltimore: <% Baltimore %> </li>
-<li>Atlanta: <% 'Atlanta %> </li>
-<li>Dallas: <% 'Dallas' %> </li>
-<li>Austin: <% 'Austin' %> </li>
