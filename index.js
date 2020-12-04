@@ -41,12 +41,15 @@ res.locals.currentUser = req.user;
 next();
 });
 
-app.get('/', (req, res) => {
-    console.log(res.locals.alerts);
-    res.render('index', { alerts: res.locals.alerts });
+app.get('/profile', (req, res) => {
+    //console.log(res.locals.alerts);
+    res.render('profile');
   });
 
-let city = 'Washington'
+
+app.get('/city/:city', (req, res, params) => {
+   let city = req.params.city 
+  console.log(city) 
 const requestObject = {
     method: 'GET',
     url: `https://www.numbeo.com/cost-of-living/in/${city}`
@@ -86,7 +89,8 @@ const requestObject = {
 
         })
   });
-
+  res.send('city')
+});
 //
 const PORT = process.env.PORT || 3000;
 
