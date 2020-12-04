@@ -1,7 +1,8 @@
+<h1><%= city %></h1>
 <ol>
     <% const newLocation => { %>
-        <li><a href="/city/Washington">Washington</a></li>
-
+        <li><a href="/city/<%= city %>"></a></li>
+        <li>Bedroom In City: <%= newLocation.bedroom_in_city %></li>
     <% } %> 
 </ol>
 
