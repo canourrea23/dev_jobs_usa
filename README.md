@@ -69,3 +69,17 @@ sequelize db:migrate
 nodemon
 ```
 
+<h1><%= city %></h1>
+<ol>
+    <% const newLocation => { %>
+        <li>1 Bedroom In City: <%= newLocation.bedroom_in_city %></li>
+        <li>1 Bedroom outside of Center: <%= newLocation.bedroom_outside_centre%> </li>
+        <li>Childcare: <%= newLocation.childcare %></li>
+        <li>Utilities (Electricity, Heating, Cooling, Water, Garbage): <%= newLocation.utilities %></li>
+        <li>Internet: <%= newLocation.internet %></li>
+        <li>Gas: <%= newLocation.childcare %></li>
+        <li>Public Transportation: <%= newLocation.public_transit %></li>
+        <li>Average meal: <%= newLocation.average_meal %></li>
+        <li>Milk: <%= newLocation.Milk %></li>
+    <% } %> 
+</ol>
