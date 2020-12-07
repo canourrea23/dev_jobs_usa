@@ -1,5 +1,6 @@
 require('dotenv').config();
 const express = require("express");
+const sequelize = require("sequelize")
 const cheerio = require('cheerio');
 const request = require('request');
 const layouts = require('express-ejs-layouts');
@@ -8,10 +9,15 @@ const passport = require('./config/ppConfig');
 const flash = require('connect-flash');
 const fetch = require('fetch').fetchUrl;
 const db = require("./models");
+const router = express.Router();
+const methodOverride = require('method-override');
+
+
 const SECRET_SESSION = process.env.SECRET_SESSION;
 
 const app = express();
 const isLoggedIn = require('./middleware/isLoggedIn');
+const users = require('./models/user');
 
 console.log('SECRET_SESSION', SECRET_SESSION);
 
@@ -20,6 +26,7 @@ app.set('view engine', 'ejs');
 app.use(require('morgan')('dev'));
 app.use(express.urlencoded({ extended: false }));
 app.use(express.static(__dirname + '/public'));
+app.use(methodOverride('_method'))
 app.use(layouts);
 const sessionObject = {
     secret: SECRET_SESSION,
@@ -33,6 +40,7 @@ app.use(session(sessionObject));
 app.use(passport.initialize());
 app.use(passport.session());
 
+
 // Flash
 // Using flash throughout app to send temp messages to user
 app.use(flash());
@@ -45,13 +53,32 @@ res.locals.alerts = req.flash();
 res.locals.currentUser = req.user;
 next();
 });
+
+app.put("/profile", (req, res) => {
+  db.user.findOne({
+    where: {
+      id: req.user.dataValues.id,
+    }
+  })
+  .then((user) => {
+    user.favoriteCity = req.body.favorite
+    user.save().then((city) => {
+      res.redirect('fave')
+    })
+  })
+});
+
 app.get('/', (req, res) => {
   console.log(res.locals.alerts);
-  res.render('index', { alerts: res.locals.alerts });
+  res.render('profile', { alerts: res.locals.alerts });
 });
 
 app.get('/profile', (req, res) => {
   res.render('profile');
+})
+
+app.get('/fave', (req, res) => {
+  res.render('fave');
 })
 
 app.get('/city',  (req, res) => {
@@ -84,9 +111,9 @@ app.get('/:city', async (req, res) => {
       public_transit: parsedPriceRows[28],
       internet: parsedPriceRows[37],
       childcare: parsedPriceRows[41],
-      gas: (Math.round(parsedPriceRows[32]*3.785)),
+      gas: (Math.round(parsedPriceRows[32])),
       average_meal: parsedPriceRows[0],
-      milk: (Math.round(parsedPriceRows[8]*3.785)),
+      milk: (Math.round(parsedPriceRows[8])),
       utilities: parsedPriceRows[35]
     };    
     db.location.create(locationObject)
@@ -100,9 +127,27 @@ app.get('/:city', async (req, res) => {
   });
 });
 
+app.use('/auth', require('./routes/auth'));
 
 
-const PORT = process.env.PORT || 3000;
+
+// app.post('/city', function(req, res) {
+//   console.log(req.body.name);
+//   db.newLocation.findOrCreate({
+//     where: {
+//       name: req.body.name,
+//       city: req.body.newLocation
+//     }
+//   }).then(() => {
+//     res.redirect('fave');
+//   })
+// });
+
+const PORT = process.env.PORT || 8000;
+
+app.use((req, res) => {
+  res.status(404).render('404')
+}), 
 
 app.get("/thing", (req, res) => res.send("Connected")); 
 
