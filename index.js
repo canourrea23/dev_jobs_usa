@@ -54,23 +54,32 @@ res.locals.currentUser = req.user;
 next();
 });
 
-app.put("/profile", (req, res) => {
-  db.user.findOne({
-    where: {
-      id: req.user.dataValues.id,
-    }
-  })
-  .then((user) => {
-    user.favoriteCity = req.body.favorite
-    user.save().then((city) => {
-      res.redirect('fave')
-    })
-  })
-});
+// app.put("/profile", (req, res) => {
+//   db.user.findOne({
+//     where: {
+//       id: req.user.id,
+//     }
+//   })
+//   .then((user) => {
+//     user.favoriteCity = req.body.favorite
+//     user.save().then((city) => {
+//       res.redirect('fave')
+//     })
+//   })
+// });
+app.put('profile', (req, res) => {
+  db.location.FindOrCreate(city)
+  .then(favoriteCity => {
+    res.render('city', {
+      favoriteCity: favoriteCity.get(),
+      city,
+    });
+  });
+})
 
 app.get('/', (req, res) => {
   console.log(res.locals.alerts);
-  res.render('profile', { alerts: res.locals.alerts });
+  res.render('index', { alerts: res.locals.alerts });
 });
 
 app.get('/profile', (req, res) => {
@@ -118,11 +127,10 @@ app.get('/:city', async (req, res) => {
     };    
     db.location.create(locationObject)
     .then(newLocation => {
-      console.log(newLocation.get());
       res.render('city', {
         newLocation: newLocation.get(),
         city,
-      } );
+      });
     });
   });
 });
