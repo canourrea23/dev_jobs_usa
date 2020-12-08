@@ -67,15 +67,19 @@ next();
 //     })
 //   })
 // });
-app.put('profile', (req, res) => {
-  db.location.FindOrCreate(city)
-  .then(favoriteCity => {
-    res.render('city', {
-      favoriteCity: favoriteCity.get(),
-      city,
-    });
-  });
+app.post('/fave', (req, res) =>{
+  
+  console.log('hello', req);
 })
+// app.put('fave', (req, res) => {
+//   db.user.FindOrCreate(user.id)
+//   .then(favoriteCity => {
+//     res.render('city', {
+//       favoriteCity: sequelize.DataTypes.get(),
+//       city,
+//     });
+//   });
+// })
 
 app.get('/', (req, res) => {
   console.log(res.locals.alerts);

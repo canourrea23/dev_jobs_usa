@@ -1,3 +1,4 @@
+@import url('https://fonts.google.com/specimen/Noto+Sans+JP?selection.family=Noto+Sans+JP:wght@100;300');
 nav ul li {
   text-decoration: none;
   display: inline-block;
@@ -6,4 +7,7 @@ nav ul li {
 
 h1 {
   color: blue;
+}
+h1 h2 h3 {
+  font-family: 'Noto Sans JP', cursive; 
 }

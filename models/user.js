@@ -24,6 +24,14 @@ module.exports = (sequelize, DataTypes) => {
         }
       }
     },
+    favoriteCity: {
+      type: DataTypes.STRING,
+      validate: {
+        len: {
+          msg: 'Invalid city'
+        }
+      }
+    },
     email: {
       type: DataTypes.STRING,
       validate: {
