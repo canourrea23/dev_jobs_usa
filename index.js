@@ -18,6 +18,7 @@ const SECRET_SESSION = process.env.SECRET_SESSION;
 const app = express();
 const isLoggedIn = require('./middleware/isLoggedIn');
 const users = require('./models/user');
+const user = require('./models/user');
 
 console.log('SECRET_SESSION', SECRET_SESSION);
 
@@ -67,10 +68,18 @@ next();
 //     })
 //   })
 // });
-app.post('/fave', (req, res) =>{
-  
-  console.log('hello', req);
+app.put('/profile', (req, res) => {
+  console.log(req);
+  db.user.findOrCreate({
+    where: {
+      id: 1,
+      favoriteCity: req.body.favorite
+    }
+  }).then(() => {
+    res.redirect('/fave')
+  }) 
 })
+
 // app.put('fave', (req, res) => {
 //   db.user.FindOrCreate(user.id)
 //   .then(favoriteCity => {
@@ -82,7 +91,6 @@ app.post('/fave', (req, res) =>{
 // })
 
 app.get('/', (req, res) => {
-  console.log(res.locals.alerts);
   res.render('index', { alerts: res.locals.alerts });
 });
 
@@ -95,13 +103,11 @@ app.get('/fave', (req, res) => {
 })
 
 app.get('/city',  (req, res) => {
-    //console.log(res.locals.alerts);
     res.render('city');
 });
 
 app.get('/:city', async (req, res) => {
   const city = req.params.city[0].toUpperCase() + req.params.city.slice(1).toLowerCase();
-  console.log('CITY',city);
   fetch(`https://www.numbeo.com/cost-of-living/in/${city}`, (error, meta, body) => {
     let html = body.toString();
     console.log(body);
